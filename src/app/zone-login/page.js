@@ -1,10 +1,17 @@
 "use client";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { Zap, Lock, User, ArrowLeft, Layers, ShieldCheck } from "lucide-react";
+import { Zap, Lock, User, ArrowLeft, Layers } from "lucide-react";
 
 export default function ZoneLogin() {
   const router = useRouter();
+
+  // Zone Level Redirection
+  const handleZoneLogin = (e) => {
+    e.preventDefault();
+    // Zone officers ko unke relevant commands page par bhej rahe hain
+    router.push('/my-commands');
+  };
 
   const s = {
     container: { 
@@ -59,11 +66,9 @@ export default function ZoneLogin() {
 
   return (
     <div style={s.container}>
-      {/* Cinematic Glows - Zone vibe (Orange-ish Red + Dark) */}
       <div style={{ position: "absolute", width: "500px", height: "500px", background: "radial-gradient(circle, rgba(218,37,29,0.1) 0%, transparent 70%)", top: "-5%", right: "-5%" }}></div>
       <div style={{ position: "absolute", width: "400px", height: "400px", background: "radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%)", bottom: "5%", left: "5%" }}></div>
 
-      {/* Back Button */}
       <motion.button 
         onClick={() => router.push('/')}
         whileHover={{ x: -5 }}
@@ -97,11 +102,12 @@ export default function ZoneLogin() {
           <p style={{ color: "#444", fontSize: "11px", marginTop: "8px", fontWeight: "700", letterSpacing: "1px" }}>SECTOR MANAGEMENT CORE</p>
         </div>
 
-        <form onSubmit={(e) => e.preventDefault()}>
+        {/* Updated Form Action */}
+        <form onSubmit={handleZoneLogin}>
           <div style={{ position: "relative" }}>
             <Layers size={18} color="#DA251D" style={{ position: "absolute", left: "18px", top: "20px", opacity: 0.8 }} />
-            <select style={{...s.input, appearance: "none"}}>
-                <option>Select Your Zone</option>
+            <select required style={{...s.input, appearance: "none"}}>
+                <option value="">Select Your Zone</option>
                 <option>Braj Zone</option>
                 <option>Paschim Zone</option>
                 <option>Kashi Zone</option>
@@ -113,15 +119,16 @@ export default function ZoneLogin() {
 
           <div style={{ position: "relative" }}>
             <User size={18} color="#DA251D" style={{ position: "absolute", left: "18px", top: "20px", opacity: 0.8 }} />
-            <input type="text" placeholder="Zone Officer ID" style={s.input} />
+            <input type="text" placeholder="Zone Officer ID" required style={s.input} />
           </div>
 
           <div style={{ position: "relative" }}>
             <Lock size={18} color="#DA251D" style={{ position: "absolute", left: "18px", top: "20px", opacity: 0.8 }} />
-            <input type="password" placeholder="Access Token" style={s.input} />
+            <input type="password" placeholder="Access Token" required style={s.input} />
           </div>
 
           <motion.button 
+            type="submit"
             whileHover={{ scale: 1.02, backgroundColor: "#DA251D", color: "white" }}
             whileTap={{ scale: 0.98 }}
             style={{ 

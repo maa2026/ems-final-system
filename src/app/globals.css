@@ -4,10 +4,86 @@
   box-sizing: border-box;
 }
 
-body, html {
-  width: 100%;
-  height: 100%;
-  background-color: #051a10 !important;
-  color: white;
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
   overflow-x: hidden;
+}
+
+/* --- DESKTOP VIEW --- */
+.dock-container {
+  position: fixed;
+  bottom: 25px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.dock-glass {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 25px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dock-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  min-width: 55px;
+  transition: transform 0.2s;
+}
+
+.dock-item:hover { transform: translateY(-5px); }
+.dock-icon { font-size: 24px; }
+.dock-label { font-size: 9px; color: #888; margin-top: 4px; font-weight: 700; }
+.active .dock-label { color: #fff; }
+.active .dock-icon { filter: drop-shadow(0 0 8px #DA251D); }
+
+.main-container { min-height: 100vh; padding-bottom: 100px; }
+.brand-header { text-align: center; padding: 30px 0; font-size: 24px; font-weight: 900; letter-spacing: 5px; }
+
+/* --- MOBILE VIEW FIX (Max 768px) --- */
+@media (max-width: 768px) {
+  .dock-container {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+
+  .dock-glass {
+    width: 100%;
+    border-radius: 25px 25px 0 0; /* Sirf upar se round */
+    justify-content: space-around; /* Icons fail jayenge (No overlap) */
+    padding: 15px 5px;
+    gap: 0;
+    background: rgba(10, 10, 10, 0.98);
+    border-top: 1px solid rgba(218, 37, 29, 0.3);
+  }
+
+  .dock-item {
+    min-width: unset;
+    flex: 1; /* Har icon barabar jagah lega */
+  }
+
+  .dock-label { font-size: 8px; } /* Mobile par chota text */
+  .brand-header { font-size: 18px; padding: 20px 0; }
+  
+  /* Content chipak raha hai toh usse center karo */
+  .page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    gap: 20px;
+  }
 }
